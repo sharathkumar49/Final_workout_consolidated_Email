@@ -1,0 +1,68 @@
+
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: sans-serif;
+    color: rgb(64,64,64);
+    padding: 0;
+    margin: 0;
+  }
+  
+  table {
+    border-collapse: collapse;
+    table-layout: auto;
+    /*width:100%;  */
+    background: white;
+  }
+  
+  th, td {
+    border: 1px solid lightgray;
+    padding: 8px; 
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; 
+  }
+  
+  th {
+    background: teal;
+    color: white;
+    text-transform: uppercase;
+    font-weight: normal;
+  }
+  
+  table tr:first-child td {
+    border-top: none;
+  }
+  
+  .container {
+   
+    background: rgb(234, 233, 229);
+    width: 100%;
+    padding: 10px;
+    height: 100%;
+
+  }
+  /*
+  .tWrap {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+*/
+
+.single-tester-consolidated-report{
+  display:grid;
+  grid-template-columns: auto;
+}
+
+
+hr { 
+  height:2px;
+  border-width:0;
+  color:gray;
+  background-color:gray;
+} 
