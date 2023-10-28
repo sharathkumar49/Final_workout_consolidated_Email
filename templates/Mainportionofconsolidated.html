@@ -1,18 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="./templates/consolidatedMailBackup.css">
+ {#   <link rel="stylesheet" href="./templates/consolidatedMailBackup.css">  #}  
+
+  
+  <style>
+     
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: sans-serif;
+    color: rgb(64,64,64);
+    padding: 0;
+    margin: 0;
+  }
+  
+  table {
+    border-collapse: collapse;
+    table-layout: auto;
+    /*width:100%;  */
+    width: 10%;
+    background: white;
+    margin-bottom:15px;
+  }
+  
+  th, td {
+    border: 1px solid lightgray;
+    padding: 4px; 
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; 
+    font-size:smaller;
+  }
+  
+  th {
+    background: teal;
+    color: white;
+    text-transform: uppercase;
+    font-weight: normal;
+  }
+  
+  table tr:first-child td {
+    border-top: none;
+  }
+  
+  .container {
+   
+    background: rgb(234, 233, 229);
+    width: auto;
+    padding: 0px;
+    height: auto;
+
+  }
+  /*
+  .tWrap {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+*/
+
+.single-tester-consolidated-report{
+  display:grid;
+  grid-template-columns: auto;
+  background: rgb(234, 233, 229);
+}
+
+
+hr { 
+  height:2px;
+  border-width:0;
+  color:gray;
+  background-color:gray;
+} 
+
+.each-section {
+ display:grid;
+ grid-template-rows: auto;
+
+}
+
+
+h4{
+margin-bottom:5px;
+margin-top: 12px;
+}
+  
+
+h3{
+  margin-bottom:3px;
+  margin-top: 12px;
+  }
+</style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
 </head>
 <body>
+
+
 <div class = "single-tester-consolidated-report">
-    {% include "portionofconsolidatedMail1.html" %}
-    {% include "portionofconsolidatedMail2.html" %}
-    {% include "portionofconsolidatedMail3.html" %}
-  
+  <h2> Summary of {{tester}} (Profile Count = {{ profile_count }} )</h2>
+    <div class="each-section"><!--each-section-->
+   <h3>1. Summary of {{tester}}'s last week Profiles Run</h3>   
+    {% include section1 ignore missing %}
+    </div>  
+
+    <div class="each-section"><!--each-section-->
+    {% include section2 ignore missing %}
+    </div>  
+
+    <div class="each-section"><!--each-section-->
+      {% include section3 ignore missing %}
+    </div>  
+
+    
+    <div class="each-section"><!--each-section-->
+      {% include section4 ignore missing %}
+    </div>  
+          
+          
+
+    <p><b>Note:</b> Testers can add their exception jobs to the file 'exception_list_R1510.cfg' which is located at <a href="https://gitlabe2.ext.net.nokia.com/vlab/scripting/-/tree/master/scripts/common/consolidatedEmailCode">https://gitlabe2.ext.net.nokia.com/vlab/scripting/-/tree/master/scripts/common/consolidatedEmailCode</a> <br>        
 </div> <!--single-tester-consolidated-report-->   
 <hr> 
 

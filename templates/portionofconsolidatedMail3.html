@@ -1,27 +1,26 @@
-    
-<div class="container"> <!--provides a wrapper for testing the scroll--> 
-  <h3> 1. Summary of {{tester}}'s Last Week Job Run</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Build Details</th>
-            <th>Green or Yellow Jobs</th>
-            <th>Red Jobs</th>
-            <th>Not executed Jobs</th>
-          </tr>
-        </thead>
-        <tbody>
 
-                  {% for singledata in MRNDATA %} 
-                  <tr>
-                    <td>{{ singledata.build_details }}</td>
-                    <td>{{ singledata.green_jobs }}</td>
-                    <td>{{ singledata.red_jobs }}</td>
-                    <td>{{ singledata.not_executed_jobs }}</td>
-                  </tr>
-                  {% endfor %}
-     
-        </tbody>
-      </table>
+  
+<div class="container"> <!--provides a wrapper for testing the scroll--> 
+  <h4> 3. Profiles which are existing in previous release({{ previousRelease }}), but not covered under Section 1</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>profiles</th>
+        <th>Owner</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for profile in testerData %}
+        {% set data_loop = loop %}
+        <tr>
+        <td>{{ profile }}</td>
+         {% if loop.first %}
+        <td rowspan="{{ profile|length }}">{{ tester}}</td>
+         {% endif %}
+      </tr> 
+        {% endfor %}      
+      
+    </tbody>
+  </table>
 </div> <!--/.container-->     
 

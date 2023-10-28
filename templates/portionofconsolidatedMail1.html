@@ -1,10 +1,9 @@
-  
+
 <div class="container"> <!--provides a wrapper for testing the scroll--> 
-  <h3> 1. Summary of {{tester}}'s Last Week Job Run</h3>
       <table>
         <thead>
           <tr>
-            <th>Build Details</th>
+            <th>{{ build_details }}</th>
             <th>Green or Yellow Jobs</th>
             <th>Red Jobs</th>
             <th>Not executed Jobs</th>
@@ -12,11 +11,11 @@
         </thead>
         <tbody>
 
-                  {% for singledata in MRNDATA %} 
+                  {% for singledata in buildData %} 
                   <tr>
                     <td>{{ singledata.build_details }}</td>
                     <td>{{ singledata.green_jobs }}</td>
-                    <td>{{ singledata.red_jobs }}</td>
+                    <td>{{ singledata.red_job }}</td>
                     <td>{{ singledata.not_executed_jobs }}</td>
                   </tr>
                   {% endfor %}

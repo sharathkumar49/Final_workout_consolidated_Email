@@ -1,0 +1,29 @@
+<div class="container"> <!--provides a wrapper for testing the scroll--> 
+  <h4> Exception Profiles</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>profiles</th>
+        <th>Owner</th>
+        <th>Exception Reason</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for exceptionGroup in exceptionData %}
+        <tr>
+          <td class = "exception-group">{{ exceptionGroup }}</td>
+          <td class = "exception-group"></td>
+          <td class = "exception-group"></td>
+        </tr>
+          {% for singleException in exceptionData[exceptionGroup] %}
+            <tr>  
+            <td>{{ singleException.name }}</td>
+            <td>{{ singleException.owner }}</td>
+            <td>{{ singleException.reason }}</td>
+            </tr> 
+          {% endfor %}      
+      {% endfor %}
+    </tbody>
+  </table>
+</div> <!--/.container-->     
+

@@ -1,32 +1,26 @@
   
-
 <div class="container"> <!--provides a wrapper for testing the scroll--> 
-  <h3> 2. Projects which are not executed last week </h3>
+  <h4> 2. Profiles which are not executed last week[{{ startDate }} - {{ endDate }}] </h4>
   <table>
     <thead>
       <tr>
         <th>profiles not executed</th>
+        <th>last executed</th>
         <th>Owner</th>
       </tr>
     </thead>
     <tbody>
-          
-      <tr>
-        {% if projectsnotexecuted is string %}
-        <td>{{ projectsnotexecuted }}</td>
-        {% else %}
-        <td>
-          {% for value in projectsnotexecuted %} 
-             {{ value }}<br>
-          {% endfor %}
-       </td>      
-        {% endif %}
-
-        <td>{{ tester }}</td>
-      </tr>
+        {% for profileData in testerData %}
+        {% set data_loop = loop %}
+        <tr>
+        <td>{{ profileData.profile }}</td>
+        <td>{{ profileData.lastexecuted }}</td>
+         {% if loop.first %}
+        <td rowspan="{{ testerData|length }}">{{ tester}}</td>
+         {% endif %}
+      </tr> 
+        {% endfor %}      
       
-
- 
     </tbody>
   </table>
 </div> <!--/.container-->     
