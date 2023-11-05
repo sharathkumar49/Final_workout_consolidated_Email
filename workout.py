@@ -1,5 +1,5 @@
 
-
+'''
 from jinja2 import Environment, FileSystemLoader
 import os
 import jinja2
@@ -27,3 +27,16 @@ if exception_dict:
 
     print("\nFinished adding data for section 3")
     time.sleep(30)
+
+'''
+
+
+BUILD_COMB_LIST = ['GGG28-02T 1830PSS-60.26-50', 'GGG28-02T 1830PSS-60.25-50', 'GGG28-02T 1830PSS-60.25-50', 'GGG28-02T 1830PSS-60.24-50', 'GGG28-02T 1830PSS-60.4-50', 'GGG28-02T 1830PSS-60.23-50', 'GGG28-02T 1830PSS-60.22-50', 'GGG28-02S 1830PSS-60.20-50', 'GGG28-02T 1830PSS-60.20-50', 'GGG28-02S 1830PSS-60.20-50']
+
+
+res = []
+[res.append(x) for x in BUILD_COMB_LIST if x not in res]
+
+BUILD_COMB_LIST_duplicates_removed = res
+
+print(BUILD_COMB_LIST_duplicates_removed)
