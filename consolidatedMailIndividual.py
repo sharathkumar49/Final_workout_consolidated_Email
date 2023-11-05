@@ -27,9 +27,11 @@ projdict = {'Robin Mai': ['WDM R15.0.0 CSW Layer-1 Training Robin'], 'Annette Op
   
 
 
-BUILD_COMB_LIST = ['GGG28-02T 1830PSS-60.26-50', 'GGG28-02T 1830PSS-60.25-50', 'GGG28-02T 1830PSS-60.25-50', 'GGG28-02T 1830PSS-60.24-50', 'GGG28-02T 1830PSS-60.4-50', 'GGG28-02T 1830PSS-60.23-50', 'GGG28-02T 1830PSS-60.22-50', 'GGG28-02S 1830PSS-60.20-50', 'GGG28-02T 1830PSS-60.20-50', 'GGG28-02S 1830PSS-60.20-50']
+BUILD_COMB_LIST = ['GGG28-02S 1830PSS-60.19-50', 'GGG28-02S 1830PSS-60.17-50', 'GGG28-02S 1830PSS-60.18-50', 'GGG28-02S 1830PSS-60.17-50', 'GGG28-02S 1830PSS-60.16-50', 'GGG28-02R 1830PSS-60.16-50', 'GGG28-02R 1830PSS-59.29-50', 'GGG28-02S 1830PSS-60.4-50', 'GGG28-02S 1830PSS-60.16-50', 'GGG28-02S 1830PSS-60.15-50', 'GGG28-02R 1830PSS-60.12-50', 'GGG30-01C 1830PSS-60.13-60', 'GGG30-01C 1830PSS-60.12-60', 'GGG28-02S 1830PSS-60.13-50', 'GGG28-02S 1830PSS-60.12-50']
 
-BUILD_COMB_LIST_duplicates_removed = ['GGG28-02T 1830PSS-60.26-50', 'GGG28-02T 1830PSS-60.25-50', 'GGG28-02T 1830PSS-60.24-50', 'GGG28-02T 1830PSS-60.4-50', 'GGG28-02T 1830PSS-60.23-50', 'GGG28-02T 1830PSS-60.22-50', 'GGG28-02S 1830PSS-60.20-50', 'GGG28-02T 1830PSS-60.20-50']
+BUILD_COMB_LIST_duplicates_removed = ['GGG28-02S 1830PSS-60.19-50', 'GGG28-02S 1830PSS-60.17-50', 'GGG28-02S 1830PSS-60.18-50', 'GGG28-02S 1830PSS-60.16-50', 'GGG28-02R 1830PSS-60.16-50', 'GGG28-02R 1830PSS-59.29-50', 'GGG28-02S 1830PSS-60.4-50', 'GGG28-02S 1830PSS-60.15-50', 'GGG28-02R 1830PSS-60.12-50', 'GGG30-01C 1830PSS-60.13-60', 'GGG30-01C 1830PSS-60.12-60', 'GGG28-02S 1830PSS-60.13-50', 'GGG28-02S 1830PSS-60.12-50']
+
+
 
 env = jinja2.Environment(loader = FileSystemLoader("templates/"))
 for tester in Final_nested_dict_greenlight:
@@ -82,6 +84,116 @@ for tester in Final_nested_dict_manual:
         fileop.write(output)
 
 print("\nFinished adding data Manual trigger")
+
+
+
+
+
+#----------------------------------------------------------------------------------------------------------------------------------#
+#section1-sub/redjobslist 
+
+for tester in testers:
+    build_redjobs_dict = {}
+    for build in range(0, len(BUILD_COMB_LIST_duplicates_removed)):
+        red_jobs_list = []
+        flag = False
+        if BUILD_COMB_LIST_duplicates_removed[build] in BUILD_COMB_LIST:
+            if tester in Final_nested_dict_greenlight and Final_nested_dict_greenlight[tester]:
+                for listvalue in Final_nested_dict_greenlight[tester]:
+                    if listvalue['build_details'] == BUILD_COMB_LIST_duplicates_removed[build] and listvalue['red_jobs_list']:
+                        red_jobs_list += listvalue['red_jobs_list']
+            if tester in Final_nested_dict and Final_nested_dict[tester]:
+                for listvalue in Final_nested_dict[tester]:
+                    if listvalue['build_details'] == BUILD_COMB_LIST_duplicates_removed[build] and listvalue['red_jobs_list']:
+                        red_jobs_list += listvalue['red_jobs_list']
+            if tester in Final_nested_dict_mrn and Final_nested_dict_mrn[tester]:
+                for listvalue in Final_nested_dict_mrn[tester]:
+                    if listvalue['build_details'] == BUILD_COMB_LIST_duplicates_removed[build] and listvalue['red_jobs_list']:
+                        red_jobs_list += listvalue['red_jobs_list']
+            if tester in Final_nested_dict_manual and Final_nested_dict_manual[tester]:
+                for listvalue in Final_nested_dict_manual[tester]:
+                    if listvalue['build_details'] == BUILD_COMB_LIST_duplicates_removed[build] and listvalue['red_jobs_list']:
+                        red_jobs_list += listvalue['red_jobs_list']
+
+        if red_jobs_list:
+            build_redjobs_dict.update({BUILD_COMB_LIST_duplicates_removed[build] : red_jobs_list})
+    
+    if build_redjobs_dict:
+        print("\nbuild_redjobs_dict:", build_redjobs_dict)
+        #after ending of one tester
+
+        env = jinja2.Environment(loader = FileSystemLoader("templates/")) 
+        context = {"redJobsBuildDict": build_redjobs_dict}
+        template = env.get_template("portion1_subRed.html")
+        output = template.render(context)
+
+        with open("./templates/{}_section1_subRed.html".format(tester.replace(' ','_')),"a") as fileop:
+            fileop.write(output)
+
+print("\nFinished adding list of all red jobs")
+
+
+
+
+#-------------------------------------------------------------------------------------------------------------------------#
+
+
+#section1-sub/notexecutedjobslist 
+
+for tester in testers:
+    build_notexecutedjobs_dict = {}
+    for build in range(0, len(BUILD_COMB_LIST_duplicates_removed)):
+        not_executed_jobs_list = []
+        flag = False
+        if BUILD_COMB_LIST_duplicates_removed[build] in BUILD_COMB_LIST:
+            if tester in Final_nested_dict_greenlight and Final_nested_dict_greenlight[tester]:
+                for listvalue in Final_nested_dict_greenlight[tester]:
+                    if listvalue['build_details'] == BUILD_COMB_LIST_duplicates_removed[build] and listvalue['not_executed_jobs_list']:
+                        not_executed_jobs_list += listvalue['not_executed_jobs_list']
+            if tester in Final_nested_dict and Final_nested_dict[tester]:
+                for listvalue in Final_nested_dict[tester]:
+                    if listvalue['build_details'] == BUILD_COMB_LIST_duplicates_removed[build] and listvalue['not_executed_jobs_list']:
+                        not_executed_jobs_list += listvalue['not_executed_jobs_list']
+            if tester in Final_nested_dict_mrn and Final_nested_dict_mrn[tester]:
+                for listvalue in Final_nested_dict_mrn[tester]:
+                    if listvalue['build_details'] == BUILD_COMB_LIST_duplicates_removed[build] and listvalue['not_executed_jobs_list']:
+                        not_executed_jobs_list += listvalue['not_executed_jobs_list']
+            if tester in Final_nested_dict_manual and Final_nested_dict_manual[tester]:
+                for listvalue in Final_nested_dict_manual[tester]:
+                    if listvalue['build_details'] == BUILD_COMB_LIST_duplicates_removed[build] and listvalue['not_executed_jobs_list']:
+                        not_executed_jobs_list += listvalue['not_executed_jobs_list']
+
+        if not_executed_jobs_list:
+            build_notexecutedjobs_dict.update({BUILD_COMB_LIST_duplicates_removed[build] : not_executed_jobs_list})
+    
+    if build_notexecutedjobs_dict:
+        print("\nbuild_notexecutedjobs_dict:", build_notexecutedjobs_dict)
+        #after ending of one tester
+
+        env = jinja2.Environment(loader = FileSystemLoader("templates/")) 
+        context = {"notExecutedJobsBuildDict": build_notexecutedjobs_dict}
+        template = env.get_template("portion1_subNotExecuted.html")
+        output = template.render(context)
+
+        with open("./templates/{}_section1_subNotExecuted.html".format(tester.replace(' ','_')),"a") as fileop:
+            fileop.write(output)
+
+print("\nFinished adding list of all not executed jobs")
+
+
+
+
+#-----------------------------------------------------------------------------------------------------------------------------------#
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -140,7 +252,13 @@ if projdict_new:
 #consolidated final data for every single tester
 env = jinja2.Environment(loader = FileSystemLoader("templates/"))
 for tester in testers:
-    context = {"tester": tester, "profile_count" : 20, "section1" : "{}_section1.html".format(tester.replace(' ','_')), "section2" : "{}_section2.html".format(tester.replace(' ','_')), "section3" : "{}_section3.html".format(tester.replace(' ','_')), "section4" : "{}_section4.html".format(tester.replace(' ','_'))}
+    context = {"tester": tester, "profile_count" : 20, 
+        "section1" : "{}_section1.html".format(tester.replace(' ','_')), 
+        "section1_redsub" :  "{}_section1_subRed.html".format(tester.replace(' ','_')),
+        "section1_notexecutedsub" : "{}_section1_subNotExecuted.html".format(tester.replace(' ','_')),
+        "section2" : "{}_section2.html".format(tester.replace(' ','_')), 
+        "section3" : "{}_section3.html".format(tester.replace(' ','_')), 
+        "section4" : "{}_section4.html".format(tester.replace(' ','_'))}
     template = env.get_template("Mainportionofconsolidated.html")
     output = template.render(context)
 
